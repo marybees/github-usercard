@@ -8,8 +8,11 @@ import axios from 'axios';
 
 axios.get('https://api.github.com/users/marybees')
 .then(response => {
-  console.log(response);
-})
+  console.log(response.data.message);
+  });
+  .catch(error => {
+    console.log("The data was not returned.", error)
+  });
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -55,7 +58,34 @@ const followersArray = [];
         <p>Bio: {users bio}</p>
       </div>
     </div>
-*/
+*/ 
+
+function createCard(cardObj) {
+// Create Elements
+const card = document.createElement('div'),
+      profilePic = document.createElement('img'),
+      cardInfo = document.createElement('div'),
+      name = document.createElement('h3'),
+      username = document.createElement('p'),
+      location = document.createElement('p'),
+      profileURL = document.createElement('p'),
+      followers = document.createElement('p'),
+      following = document.createElement('p'),
+      bio = document.createElement('p');
+
+//Add Text Content
+name.textContent = 'cardObj.name';
+username.textContent = 'cardObj.login';
+location.textContent = 'cardObj.location';
+profileURL.textContent = 'cardObj.html_url';
+followers.textContent = 'cardObj.followers';
+following.textContent = 'cardObj.following';
+bio.textContent = 'cardObj.bio';
+
+
+
+return card;
+};
 
 /*
   List of LS Instructors Github username's:
