@@ -6,13 +6,19 @@ import axios from 'axios';
     https://api.github.com/users/<your name>
 */
 
-axios.get('https://api.github.com/users/marybees')
+const gitHubProfileArray = ['marybees', 'willwashburn', 'khaliqgant', 'jtarre', 'mphelps1978'];
+
+gitHubProfileArray.forEach(username => {
+  const profileURL = 'https://api.github.com/users/' + username;
+  axios.get(profileURL)
 .then(response => {
-  console.log(response.data.message);
-  });
+  createCard(response.data);
+  })
   .catch(error => {
     console.log("The data was not returned.", error)
   });
+});
+
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -62,6 +68,8 @@ const followersArray = [];
 
 function createCard(cardObj) {
 // Create Elements
+
+console.log(cardObj)
 const card = document.createElement('div'),
       profilePic = document.createElement('img'),
       cardInfo = document.createElement('div'),
@@ -74,18 +82,42 @@ const card = document.createElement('div'),
       bio = document.createElement('p');
 
 //Add Text Content
-name.textContent = 'cardObj.name';
-username.textContent = 'cardObj.login';
-location.textContent = 'cardObj.location';
-profileURL.textContent = 'cardObj.html_url';
-followers.textContent = 'cardObj.followers';
-following.textContent = 'cardObj.following';
-bio.textContent = 'cardObj.bio';
+name.textContent = cardObj.name;
+username.textContent = cardObj.login;
+location.textContent = 'Location: ' + cardObj.location;
+profileURL.textContent = 'Profile: ' + cardObj.html_url;
+followers.textContent = 'Followers: ' + cardObj.followers;
+following.textContent = 'Following: ' + cardObj.following;
+bio.textContent = 'Bio: ' + cardObj.bio;
 
+//Add Image Source Attribute
+profilePic.src = cardObj.avatar_url;
 
+//Add Classes
+card.classList.add('card')
+cardInfo.classList.add('card-info')
+name.classList.add('name')
+username.classList.add('username')
+
+//Select Element
+const cards = document.querySelector('.cards')
+
+//Append
+cardInfo.append(name);
+cardInfo.append(username);
+cardInfo.append(location);
+cardInfo.append(profileURL);
+cardInfo.append(followers);
+cardInfo.append(following);
+cardInfo.append(bio);
+card.append(profilePic);
+card.append(cardInfo);
+cards.append(card);
 
 return card;
 };
+
+
 
 /*
   List of LS Instructors Github username's:
